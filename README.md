@@ -8,6 +8,6 @@
 
 ## 前端
 
-- [HTML](前端/1.HTML.md)
-- [CSS](前端/2.CSS.md)
-- [JavaScript](前端/3.JavaScript.md)
+- [HTML](Front-end/1.HTML.md)
+- [CSS](Front-end/2.CSS.md)
+- [JavaScript](Front-end/3.JavaScript.md)
