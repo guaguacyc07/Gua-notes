@@ -16,3 +16,12 @@
 
 - [MySQL 基础](MySQL/1.MySQL_Basics.md)
 - [MySQL 进阶](MySQL/2.MySQL_Advanced.md)
+
+## MyBatis
+
+- [MyBatis](MyBatis/MyBatis.md)
+
+## Python
+
+- [Python 基础语法](Python/python基础语法.md)
+- [Python 面向对象](Python/python面向对象.md)
