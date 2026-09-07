@@ -140,6 +140,9 @@ print(f"欢迎您，{name}")
 
 age = input("请输入您的年龄：")
 print(f"您今年 {age} 岁")
+
+# 一次性读取多个数据, 如 1 2 3 4 (同一行)
+nums = list(map(int, input().split()))
 ```
 
 ---
