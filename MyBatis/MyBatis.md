@@ -15,6 +15,132 @@
 
 # 2. MyBatis入门程序
 
++ 步骤1：打包方式：jar（<font style="color:#F5222D;">不需要war，因为mybatis封装的是jdbc。</font>）
+
+```xml
+<groupId>com.powernode</groupId>
+<artifactId>mybatis-001-introduction</artifactId>
+<version>1.0-SNAPSHOT</version>
+<packaging>jar</packaging>
+```
+
++ 步骤2：引入依赖（mybatis依赖 + mysql驱动依赖）
+
+```xml
+<!--mybatis核心依赖-->
+<dependency>
+  <groupId>org.mybatis</groupId>
+  <artifactId>mybatis</artifactId>
+  <version>3.5.10</version>
+</dependency>
+<!--mysql驱动依赖-->
+<dependency>
+  <groupId>mysql</groupId>
+  <artifactId>mysql-connector-java</artifactId>
+  <version>8.0.30</version>
+</dependency>
+```
+
++ 步骤3：在resources根目录下新建mybatis-config.xml配置文件（可以参考mybatis手册拷贝）
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/powernode"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--sql映射文件创建好之后，需要将该文件路径配置到这里-->
+        <mapper resource=""/>
+    </mappers>
+</configuration>
+```
+
+注意1：mybatis核心配置文件的文件名不一定是mybatis-config.xml，可以是其它名字。
+
+注意2：mybatis核心配置文件存放的位置也可以随意。这里选择放在resources根下，相当于放到了类的根路径下。
+
++ 步骤4：在resources根目录下新建CarMapper.xml配置文件（可以参考mybatis手册拷贝）
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace先随意写一个-->
+<mapper namespace="car">
+    <!--insert sql：保存一个汽车信息-->
+    <insert id="insertCar">
+        insert into t_car
+            (id,car_num,brand,guide_price,produce_time,car_type) 
+        values
+            (null,'102','丰田mirai',40.30,'2014-10-05','氢能源')
+    </insert>
+</mapper>
+```
+
+注意1：**<font style="color:#E8323C;">sql语句最后结尾可以不写“;”</font>**
+
+注意2：CarMapper.xml文件的名字不是固定的。可以使用其它名字。
+
+注意3：CarMapper.xml文件的位置也是随意的。这里选择放在resources根下，相当于放到了类的根路径下。
+
+注意4：<font style="color:#F5222D;">将CarMapper.xml文件路径配置到mybatis-config.xml：</font>
+
+```xml
+<mapper resource="CarMapper.xml"/>
+```
+
++ 步骤5：编写MyBatisIntroductionTest代码
+
+```java
+package com.powernode.mybatis;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.InputStream;
+
+/**
+ * MyBatis入门程序
+ * @author 老杜
+ * @since 1.0
+ * @version 1.0
+ */
+public class MyBatisIntroductionTest {
+    public static void main(String[] args) {
+        // 1. 创建SqlSessionFactoryBuilder对象
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        // 2. 创建SqlSessionFactory对象
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(is);
+        // 3. 创建SqlSession对象
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // 4. 执行sql
+        int count = sqlSession.insert("insertCar"); // 这个"insertCar"必须是sql的id
+        System.out.println("插入几条数据：" + count);
+        // 5. 提交（mybatis默认采用的事务管理器是JDBC，默认是不提交的，需要手动提交。）
+        sqlSession.commit();
+        // 6. 关闭资源（只关闭是不会提交的）
+        sqlSession.close();
+    }
+}
+```
+
+注意1：默认采用的事务管理器是：JDBC。JDBC事务默认是不提交的，需要手动提交。
+
 1. **resources目录：**
 
 放在这个目录当中的，一般都是资源文件，配置文件。

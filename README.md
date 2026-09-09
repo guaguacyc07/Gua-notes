@@ -14,8 +14,14 @@
 
 ## MySQL
 
-- [MySQL 基础](MySQL/1.MySQL_Basics.md)
-- [MySQL 进阶](MySQL/2.MySQL_Advanced.md)
+- [MySQL 基础篇](MySQL/1.MySQL基础篇.md)
+- [MySQL 进阶篇](MySQL/2.MySQL进阶篇.md)
+
+## JDBC
+
+- [JDBC 基础篇](JDBC/1.JDBC基础篇.md)
+- [JDBC 进阶篇](JDBC/2.JDBC进阶篇.md)
+- [JDBC 高级篇](JDBC/3.JDBC高级篇.md)
 
 ## MyBatis
 
