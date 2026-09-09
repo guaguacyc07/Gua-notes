@@ -13,7 +13,7 @@
 
 ---
 
-# 2. MyBatis 入门程序
+# 2. MyBatis入门程序
 
 1. **resources目录：**
 
@@ -140,5 +140,72 @@
   `<mapper resource="CarMapper.xml"/>` resource属性：这种方式是从类路径当中加载资源。
 
   `<mapper url="file:///d:/CarMapper.xml"/>` url属性：这种方式是从绝对路径当中加载资源。
+
+---
+
+# 3. MyBatis事务管理机制
+
+* **在`mybatis-config.xml`文件中，可以通过以下的配置进行mybatis的事务管理：**
+
+  ```xml
+  <transactionManager type="JDBC"/>
+  ```
+
+* **type属性的值包括两个：**
+  
+  * `JDBC`(jdbc)
+  * `MANAGED`(managed)
+  
+  type后面的值，只有以上两个值可选，不区分大小写。
+  
+* **在mybatis中提供了两种事务管理机制：**
+  
+  * 第一种：JDBC事务管理器
+  
+  * 第二种：MANAGED事务管理器
+  
+- **JDBC事务管理器：**
+
+mybatis框架自己管理事务，自己采用原生的JDBC代码去管理事务：
+
+```java
+conn.setAutoCommit(false); // 开启事务
+....业务处理...
+conn.commit(); // 手动提交事务
+```
+
+使用JDBC事务管理器的话，底层创建的事务管理器对象：`JdbcTransaction`对象。
+
+如果你编写的代码是下面的代码：
+
+```java
+SqlSession sqlSession = sqlSessionFactory.openSession(true);
+```
+
+表示没有开启事务。因为这种方式压根不会执行：`conn.setAutoCommit(false);`
+
+在JDBC事务中，没有执行`conn.setAutoCommit(false);`那么autoCommit就是true。
+
+如果autoCommit是true，就表示没有开启事务。只要执行任意一条DML语句就提交一次。
+
+- **MANAGED事务管理器：**
+
+mybatis不再负责事务的管理了。事务管理交给其它容器来负责。例如：`spring`。
+
+我不管事务了，你来负责吧。
+
+对于当前的单纯的只有mybatis的情况下，如果配置为：`MANAGED`
+
+那么事务这块是没人管的。没有人管理事务表示事务压根没有开启。
+
+- **JDBC中的事务：**
+
+如果你没有在JDBC代码中执行：`conn.setAutoCommit(false);`的话，默认的`autoCommit`是`true`。
+
+- **重点：**
+
+以后注意了，只要你的autoCommit是true，就表示没有开启事务。
+
+只有你的autoCommit是false的时候，就表示开启了事务。
 
 ---
