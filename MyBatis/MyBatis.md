@@ -310,9 +310,9 @@ SqlSession sqlSession = sqlSessionFactory.openSession(true);
 
 表示没有开启事务。因为这种方式压根不会执行：`conn.setAutoCommit(false);`
 
-在JDBC事务中，没有执行`conn.setAutoCommit(false);`那么autoCommit就是true。
+在JDBC事务中，没有执行`conn.setAutoCommit(false);`那么`autoCommit`就是`true`。
 
-如果autoCommit是true，就表示没有开启事务。只要执行任意一条DML语句就提交一次。
+如果`autoCommit`是`true`，就表示没有开启事务。只要执行任意一条DML语句就提交一次。
 
 - **MANAGED事务管理器：**
 
@@ -320,7 +320,7 @@ mybatis不再负责事务的管理了。事务管理交给其它容器来负责�
 
 我不管事务了，你来负责吧。
 
-对于当前的单纯的只有mybatis的情况下，如果配置为：`MANAGED`
+对于当前的单纯的只有`mybatis`的情况下，如果配置为：`MANAGED`
 
 那么事务这块是没人管的。没有人管理事务表示事务压根没有开启。
 
@@ -335,3 +335,76 @@ mybatis不再负责事务的管理了。事务管理交给其它容器来负责�
 只有你的autoCommit是false的时候，就表示开启了事务。
 
 ---
+
+# 4. 引入日志框架logback
+
+- 引入日志框架的目的是为了看清楚mybatis执行的具体sql。
+- 启用标准日志组件，只需要在mybatis-config.xml文件中添加以下配置：【可参考mybatis手册】
+
+```xml
+<settings>
+  <setting name="logImpl" value="STDOUT_LOGGING" />
+</settings>
+```
+
+标准日志也可以用，但是配置不够灵活，可以集成其他的日志组件，例如：log4j，logback等。
+
+- logback是目前日志框架中性能较好的，较流行的，所以我们选它。
+- 引入logback的步骤：
+  - 第一步：引入logback相关依赖
+
+```xml
+<dependency>
+  <groupId>ch.qos.logback</groupId>
+  <artifactId>logback-classic</artifactId>
+  <version>1.2.11</version>
+  <scope>test</scope>
+</dependency>
+```
+
+   - 第二步：引入logback相关配置文件（文件名叫做logback.xml或logback-test.xml，放到类路径当中）
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="false">
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/TestWeb.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <!--日志文件最大的大小-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!--mybatis log configure-->
+    <logger name="com.apache.ibatis" level="TRACE"/>
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.Statement" level="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
+    <!-- 日志输出级别,logback日志级别包括五个：TRACE < DEBUG < INFO < WARN < ERROR -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
+```
+
