@@ -34,6 +34,10 @@
 - [Maven 基础](Maven/1.Maven基础.md)
 - [Maven 高级](Maven/2.Maven高级.md)
 
+## SpringBoot3
+
+- [SpringBoot3-001](SpringBoot3/1.SpringBoot3-001.md)
+
 ## Python
 
 - [Python 基础语法](Python/1.python基础语法.md)
