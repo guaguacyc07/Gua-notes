@@ -37,6 +37,7 @@
 ## SpringBoot3
 
 - [SpringBoot3-001](SpringBoot3/1.SpringBoot3-001.md)
+- [SpringBoot3-002](SpringBoot3/2.SpringBoot3-002.md)
 
 ## Python
 
