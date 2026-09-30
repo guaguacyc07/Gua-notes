@@ -38,8 +38,9 @@
 
 - [SpringBoot3-001](SpringBoot3/1.SpringBoot3-001.md)
 - [SpringBoot3-002](SpringBoot3/2.SpringBoot3-002.md)
+- [SpringBoot3-003](SpringBoot3/3.SpringBoot3-003.md)
 
 ## Python
 
-- [Python 基础语法](Python/1.python基础语法.md)
-- [Python 面向对象](Python/2.python面向对象.md)
+- [Python 基础语法](Python/1.python001.md)
+- [Python 面向对象](Python/2.python002.md)
