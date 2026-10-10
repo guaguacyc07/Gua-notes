@@ -24,7 +24,7 @@
 ## MySQL
 
 - [MySQL 基础篇](MySQL/1.MySQL基础篇.md)
-- [MySQL 进阶篇](MySQL/2.MySQL进阶篇.md)
+- [MySQL 进阶篇01](MySQL/2.MySQL进阶篇01.md)
 
 ## JDBC
 
