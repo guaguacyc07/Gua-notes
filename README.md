@@ -25,6 +25,11 @@
 
 - [MySQL 基础篇](MySQL/1.MySQL基础篇.md)
 - [MySQL 进阶篇01](MySQL/2.MySQL进阶篇01.md)
+- [MySQL 进阶篇02](MySQL/3.MySQL进阶篇02.md)
+
+## JavaSE
+
+- [JavaSE-01](JavaSE/JavaSE-01.md)
 
 ## JDBC
 
