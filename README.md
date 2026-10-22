@@ -85,3 +85,8 @@
 
 - [Python 基础语法](Python/1.python001.md)
 - [Python 面向对象](Python/2.python002.md)
+
+## 数据结构
+
+- [C 语言速通](数据结构/1.C语言语法.md)
+- [线性表](数据结构/2.线性表.md)
