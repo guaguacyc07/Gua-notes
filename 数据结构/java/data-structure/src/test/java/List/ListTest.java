@@ -1,0 +1,116 @@
+package List;
+
+import org.junit.Test;
+
+/* 链表的相关操作 */
+public class ListTest {
+    @Test
+    public void testList() {
+        /* 1. 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
+        // 初始化各个节点
+        ListNode<Integer> n0 = new ListNode<>(1);
+        ListNode<Integer> n1 = new ListNode<>(3);
+        ListNode<Integer> n2 = new ListNode<>(2);
+        ListNode<Integer> n3 = new ListNode<>(5);
+        ListNode<Integer> n4 = new ListNode<>(4);
+        // 构建节点之间的引用
+        n0.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        
+        /* 2. 插入节点 */
+        // 遍历当前链表
+        printList(n0, "插入前链表:");
+        // 在节点 n2 之后插入节点 P(val = 4)
+        System.out.println("在节点 n2 之后插入节点 P(val = 4)");
+        insert(n2, new ListNode<>(4));
+        // 遍历当前链表
+        printList(n0, "插入后链表:");
+        
+        /* 3. 删除节点 */
+        // 遍历当前链表
+        printList(n0, "删除前链表:");
+        // 删除节点 n2 后的首个节点(刚刚加进去的节点P)
+        System.out.println("删除节点 n2 后的首个节点(刚刚加进去的节点P)");
+        remove(n2);
+        // 遍历当前链表
+        printList(n0, "删除后链表:");
+        
+        /* 4. 访问节点 */
+        // 访问索引为3(索引从0开始)的节点(对应节点n3)
+        ListNode<Integer> node = access(n0, 3);
+        System.out.println("访问索引为3的节点的值为: " + node.val);
+        
+        /* 5. 查找节点 */
+        // 查找值为 3 的首个节点
+        int index = find(n0, 3);
+        System.out.println("查找值为 3 的首个节点的索引为: " + index);
+        System.out.println("该索引对应的节点值为: " + access(n0, index).val);
+    }
+    
+    /**
+     * 在链表中查找值为 target 的首个节点
+     * @param head 链表头节点
+     * @param target 目标值
+     * @return 目标节点的索引，未找到返回 -1
+     */
+    int find(ListNode<Integer> head, int target) {
+        int index = 0;
+        while (head != null) {
+            if (head.val == target) {
+                return index;
+            }
+            head = head.next;
+            index++;
+        }
+        return -1;
+    }
+    /**
+     * 访问链表中索引为 index 的节点
+     * @param head 链表头节点
+     * @param index 索引
+     * @return 索引为 index 的节点
+     */
+    ListNode<Integer> access(ListNode<Integer> head, int index) {
+        for (int i = 0; i < index; i++) {
+            if (head == null) {
+                return null;
+            }
+            head = head.next;
+        }
+        return head;
+    }
+    
+    /**
+     * 删除链表的节点 node 之后的首个节点
+     * @param node 要删除的节点
+     */
+    void remove(ListNode<Integer> node) {
+        // 如果node为空或者node下个节点为空，直接返回
+        if (node == null || node.next == null) return;
+        // 删除node之后的首个节点
+        node.next = node.next.next;
+    }
+    /**
+     * 在链表的节点 node 之后插入节点 P
+     * @param node 插入节点的前驱节点
+     * @param P 插入的节点
+     */
+    void insert(ListNode<Integer> node, ListNode<Integer> P) {
+        P.next = node.next;
+        node.next = P;
+    }
+    /**
+     * 遍历链表并打印
+     */
+    void printList(ListNode<Integer> head, String msg) {
+        System.out.print(msg + " ");
+        ListNode<Integer> p = head;
+        while (p != null) {
+            System.out.print(p.val + " "); // 打印节点值
+            p = p.next;
+        }
+        System.out.println();
+    }
+}

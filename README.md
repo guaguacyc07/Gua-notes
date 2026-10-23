@@ -31,7 +31,6 @@
 
 ## Redis
 
-- [Redis 实践可用相关](Redis/0.Redis实践可用相关.md)
 - [Redis001](Redis/1.Redis001.md)
 
 ## JavaSE
@@ -63,6 +62,10 @@
 - [Spring004](Spring6/4.Spring004.md)
 - [手写 Spring 框架](Spring6/手写Spring.md)
 
+## SpringMVC
+
+- [SpringMVC](SpringMVC/1.SpringMVC.md)
+
 ## SpringBoot3
 
 - [SpringBoot3-001](SpringBoot3/1.SpringBoot3-001.md)
@@ -88,5 +91,8 @@
 
 ## 数据结构
 
-- [C 语言速通](数据结构/1.C语言语法.md)
-- [线性表](数据结构/2.线性表.md)
+**这里的笔记来源于[Hello 算法](https://www.hello-algo.com/)**, 这是一个非常不错的自学数据结构与算法的网站
+
+- [C 语言速通](数据结构/C/1.C语言语法.md)
+- [链表](数据结构/1.链表.md)
+- [栈与队列](数据结构/2.栈与队列.md)
