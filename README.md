@@ -31,6 +31,7 @@
 
 ## Redis
 
+- [Redis 应用01](Redis/0.Redis应用01.md)
 - [Redis001](Redis/1.Redis001.md)
 
 ## Linux
